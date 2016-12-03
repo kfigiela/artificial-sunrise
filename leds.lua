@@ -2,7 +2,9 @@ ws2812.init()
 ws2812.write(string.char(0, 0, 255, 0, 0, 255))
 
 
-buffer = ws2812.newBuffer(300, 3)
+nLeds = 107
+
+buffer = ws2812.newBuffer(nLeds, 3)
 buffer:fill(0, 0, 0)
 ws2812.write(buffer)
 

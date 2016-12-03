@@ -2,7 +2,7 @@
 rotary.setup(0,5,6,7)
 
 rotary.on(0, rotary.ALL, function (type, pos, when)
-  print("Position=" .. pos .. " event type=" .. type .. " time=" .. when)
+  -- print("Position=" .. pos .. " event type=" .. type .. " time=" .. when)
   abortSunrise()
 end)
 
@@ -29,7 +29,7 @@ rotary.on(0, rotary.TURN, function (type, pos, when)
     delta = lastPos - pos
     lastPos = pos
 
-    displayColor(math.min(math.max(0, lastColor - delta), 383))
+    displayColor(math.min(math.max(0, lastColor - delta), 445))
 end)
 
 function displayColor(colorIx)
@@ -41,11 +41,14 @@ function displayColor(colorIx)
         b = 0
     else
         r = 255
-        g = math.floor(64 + (colorIx - 255) / 128.0 * 64)
-        b = math.floor((colorIx - 255) / 128.0 * 96)
+        g = math.floor(64 + (colorIx - 255) / 190 * 126)
+        b = math.floor((colorIx - 255) / 190 * 85)
     end
-    for i = 1,180 do
-        buffer:set(i, g, r, b)
-    end
+
+    buffer:fill(g, r, b)
+
+    -- for i = 1,nLeds do
+    --     buffer:set(i, g, r, b)
+    --end
     ws2812.write(buffer)
 end
