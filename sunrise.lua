@@ -13,7 +13,7 @@ local r, g, b = 1, 0, 0
 
 gpio.mode(2,gpio.INPUT,gpio.PULLUP)
 
-sunriseTimer:register(10, tmr.ALARM_AUTO, function (t)
+sunriseTimer:register(40, tmr.ALARM_AUTO, function (t)
     buffer:set(substateIx, g, r, b)
     ws2812.write(buffer)
     if substateIx == NUM_LEDS then

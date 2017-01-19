@@ -2,7 +2,6 @@
 rotary.setup(0,5,6,7)
 
 rotary.on(0, rotary.ALL, function (type, pos, when)
-  -- print("Position=" .. pos .. " event type=" .. type .. " time=" .. when)
   abortSunrise()
 end)
 
@@ -25,11 +24,13 @@ end)
 
 rotary.on(0, rotary.TURN, function (type, pos, when)
     local delta
-
     delta = lastPos - pos
     lastPos = pos
+    if math.abs(delta) < 50 then
+      print("Position=" .. pos .. " event type=" .. type .. " time=" .. when .. " delta=" .. delta)
 
-    displayColor(math.min(math.max(0, lastColor - delta), 445))
+      displayColor(math.min(math.max(0, lastColor - delta), 445))
+    end
 end)
 
 function displayColor(colorIx)
