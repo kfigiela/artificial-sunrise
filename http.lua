@@ -1,3 +1,22 @@
+fallbackTemplate = "HTTP/1.0 200 OK\nContent-Type: text/html; charset=utf-8\n\n<form method='GET' action='/'><input type='number' name='h' value='[HOUR]'> : <input type='number' name='m' value='[MINUTE]'> <br> <button type='submit'>Save</button></form>"
+
+function loadTemplate ()
+    if file.open("template.html", "r") then
+        local template = ""
+        local chunk = file.read(512)
+        while chunk do
+            template = template .. chunk
+            chunk = file.read(512)
+        end
+        file.close()
+        return template
+    else
+        return fallbackTemplate
+    end
+end
+
+template = loadTemplate()
+
 local function connect (conn, data)
     local query_data
 
@@ -8,11 +27,18 @@ local function connect (conn, data)
                 setAlarm(tonumber(newH), tonumber(newM))
             end
             print (req_data)
-            cn:send ("HTTP/1.0 200 OK\nContent-Type: text/html; charset=utf-8\n\n<form method='GET' action='/'><input type='number' name='h' value='" .. tostring(alarmH) .."'> : <input type='number' name='m' value='" .. tostring(alarmM) .. "'> <br> <button type='submit'>Save</button></form>")
+
+            local msg = template
+            msg = string.gsub(msg, 'HOUR', tostring(alarmH))
+            msg = string.gsub(msg, 'MINUTE', tostring(alarmM))
+            msg = string.gsub(msg, 'TEMPERATURE', tostring(temp))
+            msg = string.gsub(msg, 'HUMIDITY', tostring(humidity))
+            cn:send(msg)
             -- Close the connection for the request
             cn:close ( )
        end)
  end
+
 
 
  -- Create the httpd server
