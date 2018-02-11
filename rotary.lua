@@ -10,6 +10,7 @@ lastPos = 0
 
 
 rotary.on(0, rotary.PRESS, function (type, pos, when)
+    abortSunrise()
     if lastColor ~= 0 then
         displayColor(0)
     else
@@ -19,6 +20,7 @@ rotary.on(0, rotary.PRESS, function (type, pos, when)
 end)
 
 rotary.on(0, rotary.LONGPRESS, function (type, pos, when)
+    abortSunrise()
     displayColor(383)
 end)
 
