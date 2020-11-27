@@ -87,7 +87,7 @@ alarmClock:register(10000, tmr.ALARM_AUTO, function (t)
     end
 
     if ntpSyncedStatus == 0 and alarmEnabled == 1 then
-        ws2812.write(string.char(0, 0, 30))
+        ws2812.write(string.char(0, 0, 2))
     end
     -- print(string.format("%04d/%02d/%02d %02d:%02d:%02d", tm["year"], tm["mon"], tm["day"], tm["hour"], tm["min"], tm["sec"]))
 end)

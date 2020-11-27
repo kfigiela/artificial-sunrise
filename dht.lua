@@ -10,6 +10,7 @@ dhtTimer:register(60000, tmr.ALARM_AUTO, function (t)
         mq:publish(MQTT_TEMP_TOPIC, temp, 0, 0)
         mq:publish(MQTT_HUMIDITY_TOPIC, humidity, 0, 0)
         print("Pushing DHT to MQTT")
+        print("Temp = " .. temp .. " C, RH=" .. humidity .. "%")
     else
         print("Failed to read DHT")
     end
