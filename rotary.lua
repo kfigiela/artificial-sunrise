@@ -7,6 +7,7 @@ end)
 
 lastColor = 0
 lastPos = 0
+numColors = 828
 
 rotary.on(0, rotary.PRESS, function (type, pos, when)
     abortSunrise()
@@ -28,9 +29,9 @@ rotary.on(0, rotary.TURN, function (type, pos, when)
     delta = lastPos - pos
     lastPos = pos
     if math.abs(delta) < 50 then
-      print("Position=" .. pos .. " event type=" .. type .. " time=" .. when .. " delta=" .. delta)
+    --   print("Position=" .. pos .. " event type=" .. type .. " time=" .. when .. " delta=" .. delta)
 
-      displayColor(math.min(math.max(0, lastColor - delta), 828))
+      displayColor(math.min(math.max(0, lastColor - delta), numColors))
     end
 end)
 
@@ -48,6 +49,6 @@ function displayColor(colorIx)
     end
     w = math.min(255, math.max(0, colorIx-256))
 
-    print("color " .. colorIx)
+    -- print("color " .. colorIx)
     setStripColor(r,g,b,w)
 end

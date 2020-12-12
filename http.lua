@@ -31,6 +31,10 @@ local function connect (conn, data)
             local msg = template
             msg = string.gsub(msg, 'HOUR', tostring(alarmH))
             msg = string.gsub(msg, 'MINUTE', tostring(alarmM))
+            msg = string.gsub(msg, 'TEMPERATURE', tostring(temp))
+            msg = string.gsub(msg, 'HUMIDITY', tostring(humidity))
+            msg = string.gsub(msg, 'ALARM_ON', tostring(1 - gpio.read(2)))
+
             cn:send(msg)
             -- Close the connection for the request
             cn:close ( )
