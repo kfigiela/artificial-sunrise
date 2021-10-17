@@ -18,10 +18,9 @@ end
 template = loadTemplate()
 
 local function connect (conn, data)
-    local query_data
-
     conn:on ("receive",
        function (cn, req_data)
+            local tm, msg, newH, newM
             newH, newM = string.match(req_data, "GET /%?h=(%d+)&m=(%d+) HTTP")
             if newH and newM then
                 setAlarm(tonumber(newH), tonumber(newM))
@@ -34,6 +33,13 @@ local function connect (conn, data)
             msg = string.gsub(msg, 'TEMPERATURE', tostring(temp))
             msg = string.gsub(msg, 'HUMIDITY', tostring(humidity))
             msg = string.gsub(msg, 'ALARM_ON', tostring(1 - gpio.read(2)))
+            tm = rtctime.epoch2cal(rtctime.get())
+            msg = string.gsub(msg, 'T_YYYY', tm["year"])
+            msg = string.gsub(msg, 'T_MM', tm["mon"])
+            msg = string.gsub(msg, 'T_DD', tm["day"])
+            msg = string.gsub(msg, 'T_HH', tm["hour"])
+            msg = string.gsub(msg, 'T_NN', tm["min"])
+            msg = string.gsub(msg, 'T_SS', tm["sec"])
 
             cn:send(msg)
             -- Close the connection for the request

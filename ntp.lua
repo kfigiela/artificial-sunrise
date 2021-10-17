@@ -3,7 +3,7 @@ ntpSyncedStatus = 0
 function startNTP ()
  print("Syncing RTC clock with NTP...")
  autorepeat = 1
- sntp.sync('193.219.28.147', -- ICM server
+ sntp.sync('195.187.245.55', -- ICM server
    function(sec,usec,server)
      print('RTC synced', sec, usec, server)
      tm = rtctime.epoch2cal(rtctime.get())
